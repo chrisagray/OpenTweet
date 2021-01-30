@@ -18,6 +18,7 @@
 		83F7074C25C5E98600CC7C53 /* TimelineDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F7074B25C5E98600CC7C53 /* TimelineDecoder.swift */; };
 		83F7075425C5EA1900CC7C53 /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F7075325C5EA1900CC7C53 /* Tweet.swift */; };
 		83F7076E25C5EF7000CC7C53 /* UserTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F7076D25C5EF7000CC7C53 /* UserTimeline.swift */; };
+		83F7077725C5FC3800CC7C53 /* TimelineTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F7077625C5FC3800CC7C53 /* TimelineTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		83F7074B25C5E98600CC7C53 /* TimelineDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineDecoder.swift; sourceTree = "<group>"; };
 		83F7075325C5EA1900CC7C53 /* Tweet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
 		83F7076D25C5EF7000CC7C53 /* UserTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTimeline.swift; sourceTree = "<group>"; };
+		83F7077625C5FC3800CC7C53 /* TimelineTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,11 +110,11 @@
 		009C4C6A1D9F0CD600F0BC6C /* OpenTweet */ = {
 			isa = PBXGroup;
 			children = (
-				009C4C6D1D9F0CD600F0BC6C /* TimelineViewController.swift */,
+				83F7077525C5FBFE00CC7C53 /* Model */,
 				009C4C6F1D9F0CD600F0BC6C /* Main.storyboard */,
+				009C4C6D1D9F0CD600F0BC6C /* TimelineViewController.swift */,
 				83F7074B25C5E98600CC7C53 /* TimelineDecoder.swift */,
-				83F7075325C5EA1900CC7C53 /* Tweet.swift */,
-				83F7076D25C5EF7000CC7C53 /* UserTimeline.swift */,
+				83F7077625C5FC3800CC7C53 /* TimelineTableViewController.swift */,
 				83F7074725C5E96900CC7C53 /* Supporting Files */,
 			);
 			path = OpenTweet;
@@ -153,6 +155,15 @@
 				009C4C771D9F0CD600F0BC6C /* Info.plist */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		83F7077525C5FBFE00CC7C53 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				83F7075325C5EA1900CC7C53 /* Tweet.swift */,
+				83F7076D25C5EF7000CC7C53 /* UserTimeline.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,6 +308,7 @@
 				009C4C6C1D9F0CD600F0BC6C /* AppDelegate.swift in Sources */,
 				83F7074C25C5E98600CC7C53 /* TimelineDecoder.swift in Sources */,
 				83F7076E25C5EF7000CC7C53 /* UserTimeline.swift in Sources */,
+				83F7077725C5FC3800CC7C53 /* TimelineTableViewController.swift in Sources */,
 				83F7075425C5EA1900CC7C53 /* Tweet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
