@@ -9,11 +9,14 @@
 import UIKit
 
 class TimelineViewController: UIViewController {
+    private var userTimeline = UserTimeline(timeline: [])
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		// Do any additional setup after loading the view, typically from a nib.
+        if let timeline = TimelineDecoder().decodeTimeline() {
+            userTimeline = timeline
+        }
+        print(userTimeline.timeline)
 	}
-
 }
 
