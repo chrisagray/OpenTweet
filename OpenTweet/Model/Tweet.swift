@@ -17,3 +17,5 @@ struct Tweet: Codable {
     let inReplyTo: String?
     let imageURLs: [URL]?
 }
+
+extension Tweet: Equatable {}

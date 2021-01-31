@@ -12,8 +12,14 @@ class TweetDetailsTableViewController: UITableViewController {
     // MARK: Properties
     
     var tweet: Tweet!
-    var replies: [Tweet]?
+    var replies: [Tweet]!
     var inReplyTo: Tweet?
+
+    private lazy var tweets: [Tweet] = {
+        var tweets: [Tweet] = [inReplyTo, tweet].compactMap { $0 }
+        tweets.append(contentsOf: replies)
+        return tweets
+    }()
 
     // MARK: View lifecycle
 
@@ -22,29 +28,30 @@ class TweetDetailsTableViewController: UITableViewController {
         tableView.tableFooterView = UIView()
     }
 
+    func getTweetCell(for tweet: Tweet) -> TweetCellLayout.Type {
+        switch tweet {
+        case self.tweet:
+            return TweetDetailsTableViewCell.self
+
+        default:
+            return TweetTableViewCell.self
+        }
+    }
+
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var total = 1
-        if inReplyTo != nil {
-            total += 1
-        }
-        return total + (replies?.count ?? 0)
+        tweets.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0, let inReplyTo = inReplyTo {
-            return getTweetTableViewCell(for: inReplyTo, type: TweetTableViewCell.self)
-        } else if indexPath.row != 1, let replies = replies {
-            return getTweetTableViewCell(for: replies[indexPath.row], type: TweetTableViewCell.self)
-        } else {
-            return getTweetTableViewCell(for: tweet, type: TweetDetailsTableViewCell.self)
-        }
+        let tweet = tweets[indexPath.row]
+        return getTweetTableViewCell(for: tweet, type: getTweetCell(for: tweet))
     }
 
     func getTweetTableViewCell<T: UITableViewCell>(for tweet: Tweet, type: T.Type) -> UITableViewCell {
         guard let tweetCell = tableView.dequeueReusableCell(
-            withIdentifier: String(describing: T.self)
+            withIdentifier: String(describing: type)
         ) as? TweetCellLayout else {
             return UITableViewCell()
         }

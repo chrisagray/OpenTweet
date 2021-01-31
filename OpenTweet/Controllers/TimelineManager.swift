@@ -13,13 +13,33 @@ class TimelineManager {
 
     static let shared = TimelineManager()
 
+    private init() {
+        decodeTimeline()
+    }
+
     let avatarProvider = AvatarProvider()
     private(set) var userTimeline = UserTimeline(timeline: [])
     // TODO: Need both dictionary and set?
     private(set) var userAvatars: [String: UIImage]  = [:]
     private(set) var users: Set<String> = []
 
-    // MARK: Methods
+    // MARK: Tweet specifics
+
+    func mentions(in tweet: Tweet) -> [String] {
+        tweet.content.components(separatedBy: " ")
+            .filter { $0.hasPrefix("@") }
+            .filter { users.contains($0) }
+    }
+
+    func replies(to tweet: Tweet) -> [Tweet] {
+        userTimeline.timeline.filter { $0.inReplyTo == tweet.id }
+    }
+
+    func previousTweet(to tweet: Tweet) -> Tweet? {
+        userTimeline.timeline.first { $0.id == tweet.inReplyTo }
+    }
+
+    // MARK: Timeline methods
 
     // TODO: This method is doing a lot
     func getUserAvatars(completion: @escaping (() -> Void)) {
@@ -49,13 +69,7 @@ class TimelineManager {
         }
     }
 
-    func mentions(in tweet: Tweet) -> [String] {
-        tweet.content.components(separatedBy: " ")
-            .filter { $0.hasPrefix("@") }
-            .filter { users.contains($0) }
-    }
-
-    func decodeTimeline() {
+    private func decodeTimeline() {
         do {
             guard let timelineData = getTimelineData() else {
                 //            throw NSError(domain: "", code: -1, userInfo: [:])

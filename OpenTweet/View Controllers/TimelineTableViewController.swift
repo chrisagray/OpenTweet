@@ -18,7 +18,6 @@ class TimelineTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        timelineManager.decodeTimeline()
         timelineManager.getUserAvatars { [weak self] in
             self?.tableView.reloadData()
         }
@@ -32,7 +31,9 @@ class TimelineTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: TweetTableViewCell.self)) as? TweetTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: String(describing: TweetTableViewCell.self)
+        ) as? TweetTableViewCell else {
             return UITableViewCell()
         }
         let tweet = timelineManager.userTimeline.timeline[indexPath.row]
@@ -44,7 +45,6 @@ class TimelineTableViewController: UITableViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        super.prepare(for: segue, sender: sender)
         guard let tweetDetailsTableVC = segue.destination as? TweetDetailsTableViewController,
               let indexPath = tableView.indexPathForSelectedRow else {
             return
@@ -52,8 +52,8 @@ class TimelineTableViewController: UITableViewController {
 
         let selectedTweet = timelineManager.userTimeline.timeline[indexPath.row]
         tweetDetailsTableVC.tweet = selectedTweet
-//        tweetDetailsTableVC.replies =
-        tweetDetailsTableVC.inReplyTo = timelineManager.userTimeline.timeline.first { $0.id == selectedTweet.inReplyTo }
+        tweetDetailsTableVC.replies = timelineManager.replies(to: selectedTweet)
+        tweetDetailsTableVC.inReplyTo = timelineManager.previousTweet(to: selectedTweet)
     }
 
 }
