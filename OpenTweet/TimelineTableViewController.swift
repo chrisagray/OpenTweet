@@ -36,12 +36,23 @@ class TimelineTableViewController: UITableViewController {
         }
         let tweet = timelineManager.userTimeline.timeline[indexPath.row]
         let avatar = timelineManager.userAvatars[tweet.author]
-        let mentions = tweet.content.components(separatedBy: " ")
-            .filter { $0.hasPrefix("@") }
-            .filter { timelineManager.users.contains($0) }
+        let mentions = timelineManager.mentions(in: tweet)
         cell.configureCell(with: tweet, avatar: avatar, mentions: mentions)
 
         return cell
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        guard let tweetDetailsTableVC = segue.destination as? TweetDetailsTableViewController,
+              let indexPath = tableView.indexPathForSelectedRow else {
+            return
+        }
+
+        let selectedTweet = timelineManager.userTimeline.timeline[indexPath.row]
+        tweetDetailsTableVC.tweet = selectedTweet
+//        tweetDetailsTableVC.replies =
+        tweetDetailsTableVC.inReplyTo = timelineManager.userTimeline.timeline.first { $0.id == selectedTweet.inReplyTo }
     }
 
 }

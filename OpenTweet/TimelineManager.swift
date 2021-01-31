@@ -49,6 +49,12 @@ class TimelineManager {
         }
     }
 
+    func mentions(in tweet: Tweet) -> [String] {
+        tweet.content.components(separatedBy: " ")
+            .filter { $0.hasPrefix("@") }
+            .filter { users.contains($0) }
+    }
+
     func decodeTimeline() {
         do {
             guard let timelineData = getTimelineData() else {
