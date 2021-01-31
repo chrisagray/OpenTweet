@@ -9,31 +9,27 @@
 import UIKit
 
 class TweetTableViewCell: UITableViewCell {
-    @IBOutlet weak var avatarImageView: UIImageView!
-    @IBOutlet weak var authorLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var tweetContentLabel: UILabel!
+    @IBOutlet private weak var avatarImageView: UIImageView!
+    @IBOutlet private weak var authorLabel: UILabel!
+    @IBOutlet private weak var dateLabel: UILabel!
+    @IBOutlet private weak var tweetContentLabel: UILabel!
 
-    // TODO: The table view cell shouldn't know about Tweet
-    func configureCell(with tweet: Tweet, avatar: UIImage?) {
-//        authorImageView.image = UIImageView(image: UIImage()
+    func configureCell(with tweet: Tweet, avatar: UIImage?, mentions: [String]) {
         authorLabel.text = tweet.author
         dateLabel.text = ISO8601DateFormatter().string(from: tweet.date)
-        tweetContentLabel.text = tweet.content
+        let contentAttributedString = NSMutableAttributedString(string: tweet.content)
+        mentions.forEach {
+            guard tweet.content.range(of: $0) != nil else {
+                return
+            }
+            let range = (tweet.content as NSString).range(of: $0)
+            contentAttributedString.setAttributes([.foregroundColor: UIColor.link], range: range)
+        }
+
+        tweetContentLabel.attributedText = contentAttributedString
         avatarImageView.layer.cornerRadius = avatarImageView.frame.size.width / 2
-        avatarImageView.image = avatar
+        if avatar != nil {
+            avatarImageView.image = avatar
+        }
     }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }

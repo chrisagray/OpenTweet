@@ -35,8 +35,11 @@ class TimelineTableViewController: UITableViewController {
             return UITableViewCell()
         }
         let tweet = timelineManager.userTimeline.timeline[indexPath.row]
-        let avatar = TimelineManager.shared.userAvatars[tweet.author]
-        cell.configureCell(with: tweet, avatar: avatar)
+        let avatar = timelineManager.userAvatars[tweet.author]
+        let mentions = tweet.content.components(separatedBy: " ")
+            .filter { $0.hasPrefix("@") }
+            .filter { timelineManager.users.contains($0) }
+        cell.configureCell(with: tweet, avatar: avatar, mentions: mentions)
 
         return cell
     }

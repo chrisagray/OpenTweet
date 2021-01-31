@@ -12,17 +12,20 @@ class TimelineManager {
     // MARK: Properties
 
     static let shared = TimelineManager()
-    var userTimeline = UserTimeline(timeline: [])
 
     let avatarProvider = AvatarProvider()
-
+    private(set) var userTimeline = UserTimeline(timeline: [])
+    // TODO: Need both dictionary and set?
     private(set) var userAvatars: [String: UIImage]  = [:]
+    private(set) var users: Set<String> = []
 
     // MARK: Methods
 
+    // TODO: This method is doing a lot
     func getUserAvatars(completion: @escaping (() -> Void)) {
         let group = DispatchGroup()
         userTimeline.timeline.forEach { tweet in
+            users.insert(tweet.author)
             group.enter()
             if let avatarURL = tweet.avatar, userAvatars[tweet.author] == nil {
                 avatarProvider.getUserAvatar(url: avatarURL) { [weak self] result in
@@ -46,12 +49,11 @@ class TimelineManager {
         }
     }
 
-    func decodeTimeline() -> UserTimeline? {
+    func decodeTimeline() {
         do {
             guard let timelineData = getTimelineData() else {
                 //            throw NSError(domain: "", code: -1, userInfo: [:])
-                print("Cannot get timeline data")
-                return nil
+                return print("Cannot get timeline data")
             }
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .iso8601
@@ -59,8 +61,6 @@ class TimelineManager {
         } catch {
             print(error)
         }
-
-        return nil
     }
 
     private func getTimelineData() -> Data? {
