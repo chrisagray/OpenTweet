@@ -14,10 +14,12 @@
 		009C4C811D9F0CD600F0BC6C /* OpenTweetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009C4C801D9F0CD600F0BC6C /* OpenTweetTests.swift */; };
 		009C4C8C1D9F0CD600F0BC6C /* OpenTweetUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009C4C8B1D9F0CD600F0BC6C /* OpenTweetUITests.swift */; };
 		009C4C9B1D9F0D4100F0BC6C /* timeline.json in Resources */ = {isa = PBXBuildFile; fileRef = 009C4C9A1D9F0D4100F0BC6C /* timeline.json */; };
-		83F7074C25C5E98600CC7C53 /* TimelineDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F7074B25C5E98600CC7C53 /* TimelineDecoder.swift */; };
+		83F7074C25C5E98600CC7C53 /* TimelineManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F7074B25C5E98600CC7C53 /* TimelineManager.swift */; };
 		83F7075425C5EA1900CC7C53 /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F7075325C5EA1900CC7C53 /* Tweet.swift */; };
 		83F7076E25C5EF7000CC7C53 /* UserTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F7076D25C5EF7000CC7C53 /* UserTimeline.swift */; };
 		83F7077725C5FC3800CC7C53 /* TimelineTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F7077625C5FC3800CC7C53 /* TimelineTableViewController.swift */; };
+		83F7078525C61BD200CC7C53 /* TweetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F7078425C61BD200CC7C53 /* TweetTableViewCell.swift */; };
+		83F7078D25C6201C00CC7C53 /* AvatarProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F7078C25C6201B00CC7C53 /* AvatarProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,10 +54,12 @@
 		009C4C8D1D9F0CD600F0BC6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		009C4C9A1D9F0D4100F0BC6C /* timeline.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = timeline.json; sourceTree = "<group>"; };
 		009C4C9D1D9F104800F0BC6C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		83F7074B25C5E98600CC7C53 /* TimelineDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineDecoder.swift; sourceTree = "<group>"; };
+		83F7074B25C5E98600CC7C53 /* TimelineManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineManager.swift; sourceTree = "<group>"; };
 		83F7075325C5EA1900CC7C53 /* Tweet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
 		83F7076D25C5EF7000CC7C53 /* UserTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTimeline.swift; sourceTree = "<group>"; };
 		83F7077625C5FC3800CC7C53 /* TimelineTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineTableViewController.swift; sourceTree = "<group>"; };
+		83F7078425C61BD200CC7C53 /* TweetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetTableViewCell.swift; sourceTree = "<group>"; };
+		83F7078C25C6201B00CC7C53 /* AvatarProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,8 +114,10 @@
 			children = (
 				83F7077525C5FBFE00CC7C53 /* Model */,
 				009C4C6F1D9F0CD600F0BC6C /* Main.storyboard */,
-				83F7074B25C5E98600CC7C53 /* TimelineDecoder.swift */,
+				83F7078C25C6201B00CC7C53 /* AvatarProvider.swift */,
+				83F7074B25C5E98600CC7C53 /* TimelineManager.swift */,
 				83F7077625C5FC3800CC7C53 /* TimelineTableViewController.swift */,
+				83F7078425C61BD200CC7C53 /* TweetTableViewCell.swift */,
 				83F7074725C5E96900CC7C53 /* Supporting Files */,
 			);
 			path = OpenTweet;
@@ -302,10 +308,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				009C4C6C1D9F0CD600F0BC6C /* AppDelegate.swift in Sources */,
-				83F7074C25C5E98600CC7C53 /* TimelineDecoder.swift in Sources */,
+				83F7074C25C5E98600CC7C53 /* TimelineManager.swift in Sources */,
 				83F7076E25C5EF7000CC7C53 /* UserTimeline.swift in Sources */,
+				83F7078D25C6201C00CC7C53 /* AvatarProvider.swift in Sources */,
 				83F7077725C5FC3800CC7C53 /* TimelineTableViewController.swift in Sources */,
 				83F7075425C5EA1900CC7C53 /* Tweet.swift in Sources */,
+				83F7078525C61BD200CC7C53 /* TweetTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,7 +13,7 @@ struct Tweet: Codable {
     let author: String
     let content: String
     let date: Date
-    let avatar: URL?
+    var avatar: URL?
     let inReplyTo: String?
     let imageURLs: [URL]?
 }

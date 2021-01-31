@@ -11,22 +11,34 @@ import UIKit
 class TimelineTableViewController: UITableViewController {
     // MARK: Properties
 
-    private var userTimeline = UserTimeline(timeline: [])
+    private let avatarProvider = AvatarProvider()
+    private let timelineManager = TimelineManager.shared
 
     // MARK: View lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let timeline = TimelineDecoder().decodeTimeline() {
-            userTimeline = timeline
+        timelineManager.decodeTimeline()
+        timelineManager.getUserAvatars { [weak self] in
+            self?.tableView.reloadData()
         }
-        print(userTimeline.timeline)
     }
 
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        userTimeline.timeline.count
+        timelineManager.userTimeline.timeline.count
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: TweetTableViewCell.self)) as? TweetTableViewCell else {
+            return UITableViewCell()
+        }
+        let tweet = timelineManager.userTimeline.timeline[indexPath.row]
+        let avatar = TimelineManager.shared.userAvatars[tweet.author]
+        cell.configureCell(with: tweet, avatar: avatar)
+
+        return cell
     }
 
 }
