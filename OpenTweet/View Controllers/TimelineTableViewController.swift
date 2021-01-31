@@ -22,6 +22,7 @@ class TimelineTableViewController: UITableViewController {
         timelineManager.getUserAvatars { [weak self] in
             self?.tableView.reloadData()
         }
+        tableView.tableFooterView = UIView()
     }
 
     // MARK: - Table view data source

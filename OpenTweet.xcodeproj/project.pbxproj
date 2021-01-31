@@ -118,15 +118,12 @@
 		009C4C6A1D9F0CD600F0BC6C /* OpenTweet */ = {
 			isa = PBXGroup;
 			children = (
+				83257AB025C72D4100B1D7C3 /* Controllers */,
 				83F7077525C5FBFE00CC7C53 /* Model */,
-				009C4C6F1D9F0CD600F0BC6C /* Main.storyboard */,
-				83F7078C25C6201B00CC7C53 /* AvatarProvider.swift */,
-				83F7074B25C5E98600CC7C53 /* TimelineManager.swift */,
-				83F7077625C5FC3800CC7C53 /* TimelineTableViewController.swift */,
-				83F7078425C61BD200CC7C53 /* TweetTableViewCell.swift */,
-				83257A9425C7168600B1D7C3 /* TweetDetailsTableViewController.swift */,
-				83257A9925C716A100B1D7C3 /* TweetDetailsTableViewCell.swift */,
-				83257AA425C7241800B1D7C3 /* TweetCellLayout.swift */,
+				83257AAE25C72D1300B1D7C3 /* Protocols */,
+				83257AAC25C72CDF00B1D7C3 /* View Controllers */,
+				83257AAD25C72CF500B1D7C3 /* Views */,
+				83257AAF25C72D2F00B1D7C3 /* Storyboards */,
 				83F7074725C5E96900CC7C53 /* Supporting Files */,
 			);
 			path = OpenTweet;
@@ -156,6 +153,49 @@
 				009C4C9A1D9F0D4100F0BC6C /* timeline.json */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		83257AAC25C72CDF00B1D7C3 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				83F7077625C5FC3800CC7C53 /* TimelineTableViewController.swift */,
+				83257A9425C7168600B1D7C3 /* TweetDetailsTableViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		83257AAD25C72CF500B1D7C3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				83257A9925C716A100B1D7C3 /* TweetDetailsTableViewCell.swift */,
+				83F7078425C61BD200CC7C53 /* TweetTableViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		83257AAE25C72D1300B1D7C3 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				83257AA425C7241800B1D7C3 /* TweetCellLayout.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		83257AAF25C72D2F00B1D7C3 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				009C4C6F1D9F0CD600F0BC6C /* Main.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		83257AB025C72D4100B1D7C3 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				83F7078C25C6201B00CC7C53 /* AvatarProvider.swift */,
+				83F7074B25C5E98600CC7C53 /* TimelineManager.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		83F7074725C5E96900CC7C53 /* Supporting Files */ = {

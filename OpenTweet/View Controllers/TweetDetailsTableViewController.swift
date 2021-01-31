@@ -9,9 +9,18 @@
 import UIKit
 
 class TweetDetailsTableViewController: UITableViewController {
+    // MARK: Properties
+    
     var tweet: Tweet!
     var replies: [Tweet]?
     var inReplyTo: Tweet?
+
+    // MARK: View lifecycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableView.tableFooterView = UIView()
+    }
 
     // MARK: - Table view data source
 

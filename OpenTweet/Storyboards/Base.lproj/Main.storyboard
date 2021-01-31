@@ -91,7 +91,7 @@
             </objects>
             <point key="canvasLocation" x="1094.8598130841121" y="108.20734341252701"/>
         </scene>
-        <!--Tweet Details Table View Controller-->
+        <!--Tweet-->
         <scene sceneID="eDt-4s-Zf9">
             <objects>
                 <tableViewController id="bah-VR-ft6" customClass="TweetDetailsTableViewController" customModule="OpenTweet" customModuleProvider="target" sceneMemberID="viewController">
@@ -101,17 +101,17 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="TweetDetailsTableViewCell" id="2vF-ne-gU4" customClass="TweetDetailsTableViewCell" customModule="OpenTweet" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="428" height="118.33333587646484"/>
+                                <rect key="frame" x="0.0" y="28" width="428" height="124"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2vF-ne-gU4" id="7qE-kV-5XC">
-                                    <rect key="frame" x="0.0" y="0.0" width="428" height="118.33333587646484"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="428" height="124"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Gai-YR-kBr">
-                                            <rect key="frame" x="20" y="8" width="128" height="102"/>
+                                            <rect key="frame" x="20" y="8" width="139" height="107.66666666666667"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="CvD-o3-ApY">
-                                                    <rect key="frame" x="0.0" y="0.0" width="128" height="45"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="139" height="45"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.crop.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="YBo-qK-W8h">
                                                             <rect key="frame" x="0.0" y="1" width="45" height="43.666666666666671"/>
@@ -122,22 +122,22 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3t7-eo-Eyg">
-                                                            <rect key="frame" x="53" y="12.333333333333334" width="75" height="20.333333333333329"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <rect key="frame" x="53" y="12.333333333333334" width="86" height="20.333333333333329"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
                                                 </stackView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tweet Content" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tzp-xU-sSs">
-                                                    <rect key="frame" x="0.0" y="53" width="128" height="24"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <rect key="frame" x="0.0" y="53.000000000000007" width="139" height="26.333333333333336"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2n9-px-syz">
-                                                    <rect key="frame" x="0.0" y="85" width="128" height="17"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <rect key="frame" x="0.0" y="87.333333333333329" width="139" height="20.333333333333329"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" systemColor="secondaryLabelColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -159,7 +159,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="TweetTableViewCell" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="TweetTableViewCell" id="Jzd-iZ-tCa" customClass="TweetTableViewCell" customModule="OpenTweet" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="146.33333587646484" width="428" height="73.333335876464844"/>
+                                <rect key="frame" x="0.0" y="152" width="428" height="73.333335876464844"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Jzd-iZ-tCa" id="OCI-B4-f4I">
                                     <rect key="frame" x="0.0" y="0.0" width="428" height="73.333335876464844"/>
@@ -225,7 +225,7 @@
                             <outlet property="delegate" destination="bah-VR-ft6" id="RGy-X0-DnS"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="d9y-uJ-Cqo"/>
+                    <navigationItem key="navigationItem" title="Tweet" id="d9y-uJ-Cqo"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2eq-vY-liY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
