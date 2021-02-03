@@ -18,7 +18,11 @@ protocol TweetCellLayout: UITableViewCell {
 extension TweetCellLayout {
     func configureCell(with tweet: Tweet) {
         authorLabel.text = tweet.author.name
-        dateLabel.text = ISO8601DateFormatter().string(from: tweet.date)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM/dd/yyyy hh:mm a"
+        formatter.amSymbol = "AM"
+        formatter.pmSymbol = "PM"
+        dateLabel.text = formatter.string(from: tweet.date)
         avatarImageView.layer.cornerRadius = avatarImageView.frame.size.width / 2
         if let avatar = tweet.author.avatar {
             avatarImageView.image = avatar

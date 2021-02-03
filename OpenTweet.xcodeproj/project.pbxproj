@@ -20,11 +20,12 @@
 		832F7B4425CA29C9006D43D2 /* TweetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832F7B4325CA29C9006D43D2 /* TweetData.swift */; };
 		832F7B4925CA2AAD006D43D2 /* TimelineData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832F7B4825CA2AAD006D43D2 /* TimelineData.swift */; };
 		832F7B5425CA3877006D43D2 /* Author.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832F7B5325CA3877006D43D2 /* Author.swift */; };
+		835A5C8A25CA696F0019A376 /* MockAvatarProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835A5C8925CA696F0019A376 /* MockAvatarProvider.swift */; };
 		83F7074C25C5E98600CC7C53 /* TimelineManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F7074B25C5E98600CC7C53 /* TimelineManager.swift */; };
 		83F7075425C5EA1900CC7C53 /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F7075325C5EA1900CC7C53 /* Tweet.swift */; };
 		83F7077725C5FC3800CC7C53 /* TimelineTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F7077625C5FC3800CC7C53 /* TimelineTableViewController.swift */; };
 		83F7078525C61BD200CC7C53 /* TweetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F7078425C61BD200CC7C53 /* TweetTableViewCell.swift */; };
-		83F7078D25C6201C00CC7C53 /* AvatarProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F7078C25C6201B00CC7C53 /* AvatarProvider.swift */; };
+		83F7078D25C6201C00CC7C53 /* AvatarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F7078C25C6201B00CC7C53 /* AvatarService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,11 +66,12 @@
 		832F7B4325CA29C9006D43D2 /* TweetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetData.swift; sourceTree = "<group>"; };
 		832F7B4825CA2AAD006D43D2 /* TimelineData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineData.swift; sourceTree = "<group>"; };
 		832F7B5325CA3877006D43D2 /* Author.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Author.swift; sourceTree = "<group>"; };
+		835A5C8925CA696F0019A376 /* MockAvatarProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAvatarProvider.swift; sourceTree = "<group>"; };
 		83F7074B25C5E98600CC7C53 /* TimelineManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineManager.swift; sourceTree = "<group>"; };
 		83F7075325C5EA1900CC7C53 /* Tweet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
 		83F7077625C5FC3800CC7C53 /* TimelineTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineTableViewController.swift; sourceTree = "<group>"; };
 		83F7078425C61BD200CC7C53 /* TweetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetTableViewCell.swift; sourceTree = "<group>"; };
-		83F7078C25C6201B00CC7C53 /* AvatarProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarProvider.swift; sourceTree = "<group>"; };
+		83F7078C25C6201B00CC7C53 /* AvatarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,8 +138,9 @@
 		009C4C7F1D9F0CD600F0BC6C /* OpenTweetTests */ = {
 			isa = PBXGroup;
 			children = (
-				009C4C801D9F0CD600F0BC6C /* OpenTweetTests.swift */,
 				009C4C821D9F0CD600F0BC6C /* Info.plist */,
+				835A5C8925CA696F0019A376 /* MockAvatarProvider.swift */,
+				009C4C801D9F0CD600F0BC6C /* OpenTweetTests.swift */,
 			);
 			path = OpenTweetTests;
 			sourceTree = "<group>";
@@ -196,7 +199,7 @@
 		83257AB025C72D4100B1D7C3 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				83F7078C25C6201B00CC7C53 /* AvatarProvider.swift */,
+				83F7078C25C6201B00CC7C53 /* AvatarService.swift */,
 				83F7074B25C5E98600CC7C53 /* TimelineManager.swift */,
 			);
 			path = Controllers;
@@ -365,7 +368,7 @@
 				009C4C6C1D9F0CD600F0BC6C /* AppDelegate.swift in Sources */,
 				83F7074C25C5E98600CC7C53 /* TimelineManager.swift in Sources */,
 				83257AA525C7241800B1D7C3 /* TweetCellLayout.swift in Sources */,
-				83F7078D25C6201C00CC7C53 /* AvatarProvider.swift in Sources */,
+				83F7078D25C6201C00CC7C53 /* AvatarService.swift in Sources */,
 				83F7077725C5FC3800CC7C53 /* TimelineTableViewController.swift in Sources */,
 				832F7B4925CA2AAD006D43D2 /* TimelineData.swift in Sources */,
 				832F7B5425CA3877006D43D2 /* Author.swift in Sources */,
@@ -382,6 +385,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				009C4C811D9F0CD600F0BC6C /* OpenTweetTests.swift in Sources */,
+				835A5C8A25CA696F0019A376 /* MockAvatarProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

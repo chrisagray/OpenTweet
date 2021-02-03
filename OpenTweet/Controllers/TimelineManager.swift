@@ -16,12 +16,13 @@ final class TimelineManager {
 
     // MARK: Private properties
 
-    private let avatarProvider = AvatarProvider()
+    private var avatarProvider: AvatarProvider!
     private var timelineData = TimelineData(timeline: [])
     private var idsAndTweets: [String: Tweet] = [:]
     private var namesAndAuthors: [String: Author] = [:]
 
-    private init() {
+    init(avatarProvider: AvatarProvider? = nil) {
+        self.avatarProvider = avatarProvider ?? AvatarService()
         timelineData = decodeTimeline()
         setRelationships()
         setTweetMentions()
@@ -29,6 +30,8 @@ final class TimelineManager {
 
     // MARK: Methods
 
+    /// Gets avatar images from the provider for each author.
+    /// - Parameter completion: Completion on the main thread when the task completes.
     func getUserAvatars(completion: @escaping (() -> Void)) {
         guard !namesAndAuthors.isEmpty else {
             return
@@ -39,8 +42,7 @@ final class TimelineManager {
                 getAvatar(at: avatarURL, for: author, group: group)
             }
         }
-        group.wait()
-        DispatchQueue.main.async {
+        group.notify(queue: .main) {
             completion()
         }
     }
@@ -61,6 +63,7 @@ final class TimelineManager {
         }
     }
 
+    /// Decodes the timeline JSON.
     private func decodeTimeline() -> TimelineData {
         let emptyTimeline = TimelineData(timeline: [])
         guard let path = Bundle.main.path(forResource: "timeline", ofType: "json"),
@@ -72,6 +75,7 @@ final class TimelineManager {
         return (try? decoder.decode(TimelineData.self, from: data)) ?? emptyTimeline
     }
 
+    /// Creates Author and Tweet objects from the decoded data. Replies/replied to are stored in the tweet object.
     private func setRelationships() {
         timelineData.timeline.forEach { tweetData in
             let author = getAuthor(data: tweetData)
@@ -111,10 +115,11 @@ final class TimelineManager {
         return tweet
     }
 
+    /// Checks every word in a tweet and adds it to `mentions` if it's an author's name
     private func setTweetMentions() {
         tweets.forEach { tweet in
-            let mentions = tweet.content.components(separatedBy: " ").filter { namesAndAuthors[$0] != nil }
-            tweet.mentions = mentions.compactMap { namesAndAuthors[$0] }
+            tweet.mentions = tweet.content.components(separatedBy: " ")
+                .compactMap { namesAndAuthors[$0] }
         }
     }
 }

@@ -10,8 +10,17 @@ import XCTest
 @testable import OpenTweet
 
 class OpenTweetTests: XCTestCase {
+    private var manager: TimelineManager!
+    private var avatarProvider: MockAvatarProvider!
+
+    private func setUpManager(error: Bool = false) {
+        avatarProvider = MockAvatarProvider(error: error)
+        manager = TimelineManager(avatarProvider: avatarProvider)
+    }
+
     func testFirstTweetDecodedCorrectly() {
-        let tweet = TimelineManager.shared.tweets.first!
+        setUpManager()
+        let tweet = manager.tweets.first!
         XCTAssert(tweet.id == "00001")
         XCTAssert(tweet.author.name == "@doge")
         XCTAssert(tweet.content == "Wow, much tweet, such app!")
@@ -20,11 +29,31 @@ class OpenTweetTests: XCTestCase {
     }
 
     func testReplies() {
-        guard let tweet00042 = TimelineManager.shared.tweets.first(where: { $0.id == "00042" }),
-              let tweet00004 = TimelineManager.shared.tweets.first(where: { $0.id == "00004" }) else {
+        setUpManager()
+        guard let tweet00042 = manager.tweets.first(where: { $0.id == "00042" }),
+              let tweet00004 = manager.tweets.first(where: { $0.id == "00004" }) else {
             return XCTFail("Cannot get tweets")
         }
         XCTAssert(tweet00004.inReplyTo == tweet00042)
         XCTAssert(tweet00042.replies.contains(tweet00004))
+    }
+
+    func testPosGetUserAvatar() {
+        setUpManager()
+        let image = UIImage(data: avatarProvider.data)
+        manager.getUserAvatars {
+            self.manager.tweets.forEach {
+                XCTAssertEqual($0.author.avatar, image)
+            }
+        }
+    }
+
+    func testNegGetUserAvatar() {
+        setUpManager(error: true)
+        manager.getUserAvatars {
+            self.manager.tweets.forEach {
+                XCTAssertEqual($0.author.avatar, UIImage(named: "person.crop.circle"))
+            }
+        }
     }
 }
