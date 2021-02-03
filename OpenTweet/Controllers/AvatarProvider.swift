@@ -9,7 +9,7 @@
 import UIKit
 
 class AvatarProvider {
-    func getUserAvatar(url: URL, completion: @escaping (Result<UIImage?, Error>) -> Void) {
+    func getUserAvatar(url: URL, completion: @escaping (Result<Data, Error>) -> Void) {
         URLSession.shared.dataTask(with: url) { data, _, error in
             guard error == nil else {
                 return completion(.failure(error!))
@@ -27,7 +27,7 @@ class AvatarProvider {
                 )
             }
 
-            return completion(.success(UIImage(data: data)))
+            return completion(.success(data))
         }.resume()
     }
 }

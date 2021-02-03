@@ -10,27 +10,21 @@ import XCTest
 @testable import OpenTweet
 
 class OpenTweetTests: XCTestCase {
-    
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func testFirstTweetDecodedCorrectly() {
+        let tweet = TimelineManager.shared.tweets.first!
+        XCTAssert(tweet.id == "00001")
+        XCTAssert(tweet.author.name == "@doge")
+        XCTAssert(tweet.content == "Wow, much tweet, such app!")
+        XCTAssert(tweet.author.avatarURL?.absoluteString == "http://doge2048.com/meta/doge-600.png")
+        XCTAssert(tweet.date == ISO8601DateFormatter().date(from: "2016-09-29T14:41:00-08:00"))
     }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+
+    func testReplies() {
+        guard let tweet00042 = TimelineManager.shared.tweets.first(where: { $0.id == "00042" }),
+              let tweet00004 = TimelineManager.shared.tweets.first(where: { $0.id == "00004" }) else {
+            return XCTFail("Cannot get tweets")
         }
+        XCTAssert(tweet00004.inReplyTo == tweet00042)
+        XCTAssert(tweet00042.replies.contains(tweet00004))
     }
-    
 }

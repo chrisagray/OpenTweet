@@ -16,13 +16,10 @@ final class TimelineManager {
 
     // MARK: Private properties
 
-    // TODO: Need all these properties?
     private let avatarProvider = AvatarProvider()
     private var timelineData = TimelineData(timeline: [])
-    private var tweetIdsAndTweets: [String: Tweet] = [:]
-    private var authorIdsAndAuthors: [String: Author] = [:]
-    private var authorIds: Set<String> = []
-    private var authors: Set<Author> = []
+    private var idsAndTweets: [String: Tweet] = [:]
+    private var namesAndAuthors: [String: Author] = [:]
 
     private init() {
         timelineData = decodeTimeline()
@@ -33,11 +30,11 @@ final class TimelineManager {
     // MARK: Methods
 
     func getUserAvatars(completion: @escaping (() -> Void)) {
-        guard !authors.isEmpty else {
+        guard !namesAndAuthors.isEmpty else {
             return
         }
         let group = DispatchGroup()
-        authors.forEach { author in
+        namesAndAuthors.values.forEach { author in
             if let avatarURL = author.avatarURL {
                 getAvatar(at: avatarURL, for: author, group: group)
             }
@@ -54,8 +51,8 @@ final class TimelineManager {
         group.enter()
         avatarProvider.getUserAvatar(url: url) { result in
             switch result {
-            case .success(let image):
-                author.avatar = image
+            case .success(let data):
+                author.avatar = UIImage(data: data)
 
             case .failure(let error):
                 print(error)
@@ -84,11 +81,9 @@ final class TimelineManager {
     }
 
     private func getAuthor(data: TweetData) -> Author {
-        guard let author = authorIdsAndAuthors[data.author] else {
+        guard let author = namesAndAuthors[data.author] else {
             let newAuthor = Author(name: data.author, tweets: [], avatarURL: data.avatar)
-            authors.insert(newAuthor)
-            authorIds.insert(newAuthor.name)
-            authorIdsAndAuthors[newAuthor.name] = newAuthor
+            namesAndAuthors[newAuthor.name] = newAuthor
             return newAuthor
         }
         return author
@@ -97,7 +92,7 @@ final class TimelineManager {
     private func createTweet(with data: TweetData, author: Author) -> Tweet {
         var inReplyToTweet: Tweet?
         if let inReplyToId = data.inReplyTo {
-            inReplyToTweet = tweetIdsAndTweets[inReplyToId]
+            inReplyToTweet = idsAndTweets[inReplyToId]
         }
         let tweet = Tweet(
             id: data.id,
@@ -110,7 +105,7 @@ final class TimelineManager {
             urls: []
         )
         inReplyToTweet?.replies.append(tweet)
-        tweetIdsAndTweets[data.id] = tweet
+        idsAndTweets[data.id] = tweet
         tweets.append(tweet)
 
         return tweet
@@ -118,8 +113,8 @@ final class TimelineManager {
 
     private func setTweetMentions() {
         tweets.forEach { tweet in
-            let mentions = tweet.content.components(separatedBy: " ").filter { authorIds.contains($0) }
-            tweet.mentions = mentions.compactMap { authorIdsAndAuthors[$0] }
+            let mentions = tweet.content.components(separatedBy: " ").filter { namesAndAuthors[$0] != nil }
+            tweet.mentions = mentions.compactMap { namesAndAuthors[$0] }
         }
     }
 }
