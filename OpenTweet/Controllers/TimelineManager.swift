@@ -8,87 +8,118 @@
 
 import UIKit
 
-class TimelineManager {
+final class TimelineManager {
     // MARK: Properties
 
     static let shared = TimelineManager()
+    private(set) var tweets: [Tweet] = []
+
+    // MARK: Private properties
+
+    // TODO: Need all these properties?
+    private let avatarProvider = AvatarProvider()
+    private var timelineData = TimelineData(timeline: [])
+    private var tweetIdsAndTweets: [String: Tweet] = [:]
+    private var authorIdsAndAuthors: [String: Author] = [:]
+    private var authorIds: Set<String> = []
+    private var authors: Set<Author> = []
 
     private init() {
-        decodeTimeline()
+        timelineData = decodeTimeline()
+        setRelationships()
+        setTweetMentions()
     }
 
-    let avatarProvider = AvatarProvider()
-    private(set) var userTimeline = UserTimeline(timeline: [])
-    // TODO: Need both dictionary and set?
-    private(set) var userAvatars: [String: UIImage]  = [:]
-    private(set) var users: Set<String> = []
+    // MARK: Methods
 
-    // MARK: Tweet specifics
-
-    func mentions(in tweet: Tweet) -> [String] {
-        tweet.content.components(separatedBy: " ")
-            .filter { $0.hasPrefix("@") }
-            .filter { users.contains($0) }
-    }
-
-    func replies(to tweet: Tweet) -> [Tweet] {
-        userTimeline.timeline.filter { $0.inReplyTo == tweet.id }
-    }
-
-    func previousTweet(to tweet: Tweet) -> Tweet? {
-        userTimeline.timeline.first { $0.id == tweet.inReplyTo }
-    }
-
-    // MARK: Timeline methods
-
-    // TODO: This method is doing a lot
     func getUserAvatars(completion: @escaping (() -> Void)) {
+        guard !authors.isEmpty else {
+            return
+        }
         let group = DispatchGroup()
-        userTimeline.timeline.forEach { tweet in
-            users.insert(tweet.author)
-            group.enter()
-            if let avatarURL = tweet.avatar, userAvatars[tweet.author] == nil {
-                avatarProvider.getUserAvatar(url: avatarURL) { [weak self] result in
-                    switch result {
-                    case .success(let data):
-                        self?.userAvatars[tweet.author] = UIImage(data: data)
-
-                    case .failure(let error):
-                        print(error)
-                    }
-                    group.leave()
-                }
-            } else {
-                group.leave()
+        authors.forEach { author in
+            if let avatarURL = author.avatarURL {
+                getAvatar(at: avatarURL, for: author, group: group)
             }
         }
-
         group.wait()
         DispatchQueue.main.async {
             completion()
         }
     }
 
-    private func decodeTimeline() {
-        do {
-            guard let timelineData = getTimelineData() else {
-                //            throw NSError(domain: "", code: -1, userInfo: [:])
-                return print("Cannot get timeline data")
+    // MARK: Private methods
+
+    private func getAvatar(at url: URL, for author: Author, group: DispatchGroup) {
+        group.enter()
+        avatarProvider.getUserAvatar(url: url) { result in
+            switch result {
+            case .success(let image):
+                author.avatar = image
+
+            case .failure(let error):
+                print(error)
             }
-            let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .iso8601
-            userTimeline = try decoder.decode(UserTimeline.self, from: timelineData)
-        } catch {
-            print(error)
+            group.leave()
         }
     }
 
-    private func getTimelineData() -> Data? {
+    private func decodeTimeline() -> TimelineData {
+        let emptyTimeline = TimelineData(timeline: [])
         guard let path = Bundle.main.path(forResource: "timeline", ofType: "json"),
               let data = FileManager.default.contents(atPath: path) else {
-            return nil
+            return emptyTimeline
         }
-        return data
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        return (try? decoder.decode(TimelineData.self, from: data)) ?? emptyTimeline
     }
 
+    private func setRelationships() {
+        timelineData.timeline.forEach { tweetData in
+            let author = getAuthor(data: tweetData)
+            let tweet = createTweet(with: tweetData, author: author)
+            author.tweets.append(tweet)
+        }
+    }
+
+    private func getAuthor(data: TweetData) -> Author {
+        guard let author = authorIdsAndAuthors[data.author] else {
+            let newAuthor = Author(name: data.author, tweets: [], avatarURL: data.avatar)
+            authors.insert(newAuthor)
+            authorIds.insert(newAuthor.name)
+            authorIdsAndAuthors[newAuthor.name] = newAuthor
+            return newAuthor
+        }
+        return author
+    }
+
+    private func createTweet(with data: TweetData, author: Author) -> Tweet {
+        var inReplyToTweet: Tweet?
+        if let inReplyToId = data.inReplyTo {
+            inReplyToTweet = tweetIdsAndTweets[inReplyToId]
+        }
+        let tweet = Tweet(
+            id: data.id,
+            content: data.content,
+            date: data.date,
+            author: author,
+            inReplyTo: inReplyToTweet,
+            replies: [],
+            mentions: [],
+            urls: []
+        )
+        inReplyToTweet?.replies.append(tweet)
+        tweetIdsAndTweets[data.id] = tweet
+        tweets.append(tweet)
+
+        return tweet
+    }
+
+    private func setTweetMentions() {
+        tweets.forEach { tweet in
+            let mentions = tweet.content.components(separatedBy: " ").filter { authorIds.contains($0) }
+            tweet.mentions = mentions.compactMap { authorIdsAndAuthors[$0] }
+        }
+    }
 }

@@ -16,22 +16,25 @@ protocol TweetCellLayout: UITableViewCell {
 }
 
 extension TweetCellLayout {
-    func configureCell(with tweet: Tweet, avatar: UIImage?, mentions: [String]) {
-        authorLabel.text = tweet.author
+    func configureCell(with tweet: Tweet) {
+        authorLabel.text = tweet.author.name
         dateLabel.text = ISO8601DateFormatter().string(from: tweet.date)
-        let contentAttributedString = NSMutableAttributedString(string: tweet.content)
-        mentions.forEach {
-            guard tweet.content.range(of: $0) != nil else {
-                return
-            }
-            let range = (tweet.content as NSString).range(of: $0)
-            contentAttributedString.setAttributes([.foregroundColor: UIColor.link], range: range)
-        }
-
-        tweetContentLabel.attributedText = contentAttributedString
         avatarImageView.layer.cornerRadius = avatarImageView.frame.size.width / 2
-        if avatar != nil {
+        if let avatar = tweet.author.avatar {
             avatarImageView.image = avatar
         }
+        highlightMentions(in: tweet)
+    }
+
+    private func highlightMentions(in tweet: Tweet) {
+        let contentAttributedString = NSMutableAttributedString(string: tweet.content)
+        tweet.mentions.forEach { author in
+            guard tweet.content.range(of: author.name) != nil else {
+                return
+            }
+            let range = (tweet.content as NSString).range(of: author.name)
+            contentAttributedString.setAttributes([.foregroundColor: UIColor.link], range: range)
+        }
+        tweetContentLabel.attributedText = contentAttributedString
     }
 }

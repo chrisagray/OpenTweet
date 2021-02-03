@@ -12,12 +12,10 @@ class TweetDetailsTableViewController: UITableViewController {
     // MARK: Properties
     
     var tweet: Tweet!
-    var replies: [Tweet]!
-    var inReplyTo: Tweet?
 
     private lazy var tweets: [Tweet] = {
-        var tweets: [Tweet] = [inReplyTo, tweet].compactMap { $0 }
-        tweets.append(contentsOf: replies)
+        var tweets: [Tweet] = [tweet.inReplyTo, tweet].compactMap { $0 }
+        tweets.append(contentsOf: tweet.replies)
         return tweets
     }()
 
@@ -55,11 +53,7 @@ class TweetDetailsTableViewController: UITableViewController {
         ) as? TweetCellLayout else {
             return UITableViewCell()
         }
-        tweetCell.configureCell(
-            with: tweet,
-            avatar: TimelineManager.shared.userAvatars[tweet.author],
-            mentions: TimelineManager.shared.mentions(in: tweet)
-        )
+        tweetCell.configureCell(with: tweet)
         return tweetCell
     }
 
